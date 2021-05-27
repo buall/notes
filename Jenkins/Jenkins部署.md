@@ -1,3 +1,5 @@
+# Jenkins部署
+
 ## Docker运行Jenkins
 
 ```bash
@@ -25,7 +27,7 @@ map $http_upgrade $connection_upgrade {
 
 server {
     listen       80;
-    server_name  localhost;
+    server_name  example.com;
 
     # Jenkins
     location /jenkins/ {
@@ -33,7 +35,7 @@ server {
         proxy_pass         http://127.0.0.1:18080;
         proxy_redirect     default;
         proxy_http_version 1.1;
-		
+  
         # Required for Jenkins websocket agents
         proxy_set_header   Connection        $connection_upgrade;
         proxy_set_header   Upgrade           $http_upgrade;
@@ -43,7 +45,7 @@ server {
         proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
         proxy_set_header   X-Forwarded-Proto $scheme;
         proxy_max_temp_file_size 0;
-		
+  
         #this is the maximum upload size
         client_max_body_size       10m;
         client_body_buffer_size    128k;
@@ -58,5 +60,6 @@ server {
 }
 ```
 
+## 访问
 
-
+确定服务启动成功之后在浏览器输入`http://example.com/jenkins`即可进入初始化页面。
